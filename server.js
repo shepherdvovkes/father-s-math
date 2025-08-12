@@ -2,6 +2,13 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const http = require('http');
+
+// Загружаем переменные окружения
+require('dotenv').config({ path: './.env' });
+
+// Импортируем fetch для Node.js
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 // SSL сертификаты
 const options = {
@@ -41,6 +48,123 @@ function getSafePath(requestedPath) {
     return path.join(__dirname, cleanPath);
 }
 
+// Функция для обработки AI-чата
+async function handleAIChatRequest(req, res) {
+    try {
+        // Устанавливаем заголовки для CORS и потоковой передачи
+        res.writeHead(200, {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        });
+
+        // Читаем тело запроса
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', async () => {
+            try {
+                const { message, context } = JSON.parse(body);
+                
+                // Проверяем наличие API ключа
+                const apiKey = process.env.OPENAI_API_KEY;
+                if (!apiKey || apiKey === 'your_openai_api_key_here') {
+                    res.write('Ошибка: API ключ OpenAI не настроен. Пожалуйста, добавьте ваш API ключ в файл config.env\n');
+                    res.end();
+                    return;
+                }
+
+                // Формируем промпт с контекстом урока
+                const systemPrompt = `Ты - AI-помощник по математике для учеников 10-го класса. 
+Текущий урок: ${context.lessonTitle || 'Не указан'}
+Предмет: ${context.currentSubject || 'Не указан'}
+Описание урока: ${context.lessonDescription || 'Не указано'}
+
+Твоя задача - помочь ученику понять материал, объяснить сложные концепции простым языком, 
+дать пошаговые решения задач и ответить на любые вопросы по математике.
+
+Отвечай на русском языке, будь дружелюбным и терпеливым. 
+Если нужно, используй примеры и аналогии для лучшего понимания.`;
+
+                const userPrompt = `Вопрос ученика: ${message}`;
+
+                // Отправляем запрос к OpenAI API
+                const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-3.5-turbo',
+                        messages: [
+                            { role: 'system', content: systemPrompt },
+                            { role: 'user', content: userPrompt }
+                        ],
+                        stream: true,
+                        max_tokens: 1000,
+                        temperature: 0.7
+                    })
+                });
+
+                if (!openaiResponse.ok) {
+                    throw new Error(`OpenAI API error: ${openaiResponse.status}`);
+                }
+
+                const reader = openaiResponse.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) break;
+                    
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n');
+                    
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const data = line.slice(6);
+                            
+                            if (data === '[DONE]') {
+                                res.end();
+                                return;
+                            }
+                            
+                            try {
+                                const parsed = JSON.parse(data);
+                                if (parsed.choices && parsed.choices[0] && parsed.choices[0].delta && parsed.choices[0].delta.content) {
+                                    res.write(parsed.choices[0].delta.content);
+                                }
+                            } catch (e) {
+                                // Игнорируем ошибки парсинга
+                            }
+                        }
+                    }
+                }
+                
+                res.end();
+                
+            } catch (error) {
+                console.error('Ошибка при обработке AI-запроса:', error);
+                res.write(`Ошибка: ${error.message}\n`);
+                res.end();
+            }
+        });
+
+    } catch (error) {
+        console.error('Ошибка в handleAIChatRequest:', error);
+        res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.write('Внутренняя ошибка сервера\n');
+        res.end();
+    }
+}
+
 // Создаем HTTPS сервер
 const server = https.createServer(options, (req, res) => {
     console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
@@ -48,6 +172,12 @@ const server = https.createServer(options, (req, res) => {
     // Парсим URL
     const parsedUrl = url.parse(req.url);
     let pathname = parsedUrl.pathname;
+    
+    // Обработка API запросов
+    if (pathname === '/api/ai-chat' && req.method === 'POST') {
+        handleAIChatRequest(req, res);
+        return;
+    }
     
     // Обработка корневого пути
     if (pathname === '/') {

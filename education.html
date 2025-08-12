@@ -91,10 +91,11 @@
                             <span class="lesson-type" id="lessonType">Интерактивный</span>
                             <span class="lesson-difficulty" id="lessonDifficulty">Средний</span>
                         </div>
-                        <div class="lesson-actions">
-                            <button class="action-btn" id="editLessonBtn"><i class="fas fa-edit"></i> Редактировать</button>
-                            <button class="action-btn" id="addLessonBtn"><i class="fas fa-plus"></i> Добавить урок</button>
-                        </div>
+                                            <div class="lesson-actions">
+                        <button class="action-btn" id="editLessonBtn"><i class="fas fa-edit"></i> Редактировать</button>
+                        <button class="action-btn" id="addLessonBtn"><i class="fas fa-plus"></i> Добавить урок</button>
+                        <button class="action-btn ai-help-btn" id="aiHelpBtn"><i class="fas fa-robot"></i> Задать вопрос AI</button>
+                    </div>
                     </div>
                     
                     <div class="lesson-description" id="lessonDescription">
@@ -193,6 +194,41 @@
         </div>
     </div>
 
+    <!-- AI Чат -->
+    <div class="ai-chat-container" id="aiChatContainer">
+        <div class="ai-chat-header">
+            <div class="ai-chat-title">
+                <i class="fas fa-robot"></i>
+                <span>AI Помощник</span>
+            </div>
+            <button class="ai-chat-close" id="aiChatClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="ai-chat-messages" id="aiChatMessages">
+            <div class="ai-message">
+                <div class="ai-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-message-content">
+                    <p>Привет! Я AI-помощник по математике. Задай мне любой вопрос по текущему уроку, и я постараюсь помочь!</p>
+                </div>
+            </div>
+        </div>
+        <div class="ai-chat-input-container">
+            <div class="ai-chat-input-wrapper">
+                <textarea 
+                    id="aiChatInput" 
+                    placeholder="Задай вопрос по уроку..."
+                    rows="1"
+                ></textarea>
+                <button class="ai-chat-send" id="aiChatSend">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Скрипты -->
     <script src="js/model/educationDatabase.js"></script>
     <script src="js/model/templateNames.js"></script>
@@ -204,5 +240,6 @@
     <script src="js/view/uiPanel.js"></script>
     <script src="js/controller/mainController.js"></script>
     <script src="js/education.js"></script>
+    <script src="js/aiChat.js"></script>
 </body>
 </html>
