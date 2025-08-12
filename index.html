@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Father's MATH - Загрузка</title>
+    <title>Father's MATH - Математическая платформа</title>
     
     <!-- Favicon для различных устройств и браузеров -->
     <link rel="icon" type="image/png" sizes="16x16" href="logo/sizes/favicon-16x16.png">
@@ -19,12 +19,13 @@
     <link rel="icon" type="image/png" sizes="512x512" href="logo/sizes/logo-512x512.png">
     
     <!-- Microsoft Tiles -->
-    <meta name="msapplication-TileColor" content="#0066cc">
+    <meta name="msapplication-TileColor" content="#1a1a1a">
     <meta name="msapplication-TileImage" content="logo/sizes/logo-128x128.png">
     
     <!-- Theme Color -->
-    <meta name="theme-color" content="#0066cc">
+    <meta name="theme-color" content="#1a1a1a">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -33,531 +34,645 @@
         }
 
         body {
-            background: #000;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            font-weight: 400;
         }
 
-        .splash-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+        /* Типографика */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: #1a1a1a;
         }
 
-        .logo-container {
-            position: relative;
-            z-index: 10;
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+
+        p {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        /* Навигация */
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            height: 70px;
         }
 
         .logo {
-            width: 200px;
-            height: 200px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(0, 123, 255, 0.8));
-            animation: pulse 2s ease-in-out infinite;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
         }
 
-        .logo-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 123, 255, 0.4) 0%, rgba(0, 123, 255, 0.2) 50%, transparent 70%);
-            border-radius: 50%;
-            animation: glowPulse 2s ease-in-out infinite;
-            z-index: 5;
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
         }
 
-        .logo-glow-intense {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(0, 123, 255, 0.6) 0%, rgba(0, 123, 255, 0.3) 40%, transparent 70%);
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 6;
-            animation: intenseGlow 0.5s ease-out 2.8s forwards;
+        .nav-menu a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
         }
 
-        .title {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 4rem;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-            opacity: 0;
-            z-index: 20;
-            white-space: nowrap;
-            animation: titleAppear 0.8s ease-out 3.2s forwards;
+        .nav-menu a:hover {
+            color: #1a1a1a;
         }
 
-        .title-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 4rem;
-            font-weight: bold;
-            color: transparent;
-            -webkit-text-stroke: 2px rgba(0, 123, 255, 0.5);
-            opacity: 0;
-            z-index: 19;
-            white-space: nowrap;
-            animation: titleGlow 0.8s ease-out 3.2s forwards;
+        /* Герой секция */
+        .hero {
+            padding: 120px 2rem 80px;
+            background: #f8fafc;
+            text-align: center;
         }
 
-        .flash {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #4a5568;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #2d3748;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #1a1a1a;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Секции */
+        .section {
+            padding: 80px 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.25rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            color: #1a1a1a;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            color: #4a5568;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Карточки */
+        .card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: #cbd5e0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: #f8fafc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            font-size: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .card p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* Сетки */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        /* Калькулятор */
+        .calculator-section {
+            background: #f8fafc;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .calculator-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .calculator-header p {
+            color: #4a5568;
+        }
+
+        /* Формы */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 15%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 85%);
-            opacity: 0;
-            z-index: 15;
-            animation: flashEffect 2s ease-out 3s forwards;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: #ffffff;
+            transition: border-color 0.2s ease;
         }
 
-        .flash-intense {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0.9) 20%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0.3) 60%, rgba(255, 255, 255, 0) 80%);
-            opacity: 0;
-            z-index: 16;
-            animation: intenseFlash 0.3s ease-out 3.1s forwards;
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a1a1a;
         }
 
-        .flash-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 0;
-            height: 0;
-            border: 3px solid rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 17;
-            animation: flashRing 1.2s ease-out 3.3s forwards;
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
-        .flash-ring-2 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 0;
-            height: 0;
-            border: 2px solid rgba(0, 123, 255, 0.8);
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 18;
-            animation: flashRing2 1.5s ease-out 3.4s forwards;
+        /* Результаты */
+        .results-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
         }
 
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 8;
+        .results-section h4 {
+            margin-bottom: 1rem;
+            color: #1a1a1a;
         }
 
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #007bff;
-            border-radius: 50%;
-            opacity: 0;
-            animation: particleFloat 3s ease-out 3.6s forwards;
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .particle-gold {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #ffd700;
-            border-radius: 50%;
-            opacity: 0;
-            animation: particleFloatGold 2.5s ease-out 3.7s forwards;
+        .result-item:last-child {
+            border-bottom: none;
         }
 
-        .fade-out {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            opacity: 0;
-            z-index: 25;
-            animation: fadeOut 1s ease-in 5s forwards;
+        .result-label {
+            font-weight: 500;
+            color: #4a5568;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(0, 123, 255, 0.8));
-            }
-            50% {
-                transform: scale(1.2);
-                filter: drop-shadow(0 0 60px rgba(0, 123, 255, 1));
-            }
+        .result-value {
+            font-weight: 600;
+            color: #1a1a1a;
         }
 
-        @keyframes glowPulse {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.4;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.3);
-                opacity: 0.7;
-            }
+        /* График */
+        .graph-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
         }
 
-        @keyframes intenseGlow {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.5);
-            }
-            50% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1.5);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(2);
-            }
+        .graph-container canvas {
+            max-width: 100%;
+            height: auto;
         }
 
-        @keyframes flashEffect {
-            0% {
-                opacity: 0;
-                transform: scale(0.1);
+        /* Футер */
+        .footer {
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #a0aec0;
+            text-decoration: none;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
             }
-            20% {
-                opacity: 1;
-                transform: scale(1.8);
+
+            .hero h1 {
+                font-size: 2.5rem;
             }
-            40% {
-                opacity: 0.9;
-                transform: scale(2.2);
+
+            .hero p {
+                font-size: 1.1rem;
             }
-            70% {
-                opacity: 0.6;
-                transform: scale(2.8);
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
             }
-            100% {
-                opacity: 0;
-                transform: scale(3.5);
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
             }
         }
 
-        @keyframes intenseFlash {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(2);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(3);
-            }
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes flashRing {
-            0% {
-                width: 0;
-                height: 0;
-                opacity: 1;
-            }
-            100% {
-                width: 800px;
-                height: 800px;
-                opacity: 0;
-            }
-        }
-
-        @keyframes flashRing2 {
-            0% {
-                width: 0;
-                height: 0;
-                opacity: 1;
-            }
-            100% {
-                width: 1000px;
-                height: 1000px;
-                opacity: 0;
-            }
-        }
-
-        @keyframes titleAppear {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.2);
-            }
-            30% {
-                opacity: 0.5;
-                transform: translate(-50%, -50%) scale(1.3);
-            }
-            60% {
-                opacity: 0.8;
-                transform: translate(-50%, -50%) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
-        @keyframes titleGlow {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.2);
-            }
-            100% {
-                opacity: 0.6;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
-        @keyframes particleFloat {
-            0% {
-                opacity: 0;
-                transform: translate(0, 0) scale(0);
-            }
-            20% {
-                opacity: 1;
-                transform: translate(var(--x), var(--y)) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(calc(var(--x) * 2.5), calc(var(--y) * 2.5)) scale(0);
-            }
-        }
-
-        @keyframes particleFloatGold {
-            0% {
-                opacity: 0;
-                transform: translate(0, 0) scale(0);
-            }
-            15% {
-                opacity: 1;
-                transform: translate(var(--x), var(--y)) scale(1.2);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(calc(var(--x) * 3), calc(var(--y) * 3)) scale(0);
-            }
-        }
-
-        @keyframes fadeOut {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
-        .loading-text {
-            position: absolute;
-            bottom: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #fff;
-            font-size: 1.2rem;
-            opacity: 0.7;
-            z-index: 10;
-        }
-
-        .progress-bar {
-            position: absolute;
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            overflow: hidden;
-            z-index: 10;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #007bff, #00d4ff);
-            width: 0%;
-            animation: progressFill 5s ease-out forwards;
-        }
-
-        @keyframes progressFill {
-            0% {
-                width: 0%;
-            }
-            100% {
-                width: 100%;
-            }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
         }
     </style>
 </head>
 <body>
-    <div class="splash-container">
-        <div class="logo-glow"></div>
-        <div class="logo-glow-intense"></div>
-        <div class="logo-container">
-            <img src="logo/logo1blue_nobg.png" alt="Father's MATH Logo" class="logo">
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Father's MATH</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Главная</a></li>
+                <li><a href="education.html">Образование</a></li>
+                <li><a href="#calculator">Калькулятор</a></li>
+                <li><a href="#about">О проекте</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
         </div>
-        
-        <div class="flash"></div>
-        <div class="flash-intense"></div>
-        <div class="flash-ring"></div>
-        <div class="flash-ring-2"></div>
-        <div class="title-glow">Father's MATH</div>
-        <div class="title">Father's MATH</div>
-        <div class="fade-out"></div>
-        
-        <div class="particles" id="particles"></div>
-        
-        <div class="loading-text">Загрузка математического движка...</div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
+    </nav>
 
-        <div class="manual-controls">
-            <button onclick="location.reload()" style="
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                background: rgba(0, 123, 255, 0.8);
-                color: white;
-                border: none;
-                padding: 10px 15px;
-                border-radius: 5px;
-                cursor: pointer;
-                z-index: 30;
-                font-size: 0.9rem;
-            ">🔄 Перезапустить</button>
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Математическая Платформа</h1>
+            <p>Интерактивное изучение математики с визуализацией и практическими примерами. Идеально для студентов и преподавателей.</p>
+            <div class="btn-group">
+                <a href="education.html" class="btn btn-primary">Начать Обучение</a>
+                <a href="#calculator" class="btn btn-secondary">Калькулятор</a>
+            </div>
         </div>
-    </div>
+    </section>
 
+    <!-- Основные возможности -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Возможности Платформы</h2>
+            <p class="section-subtitle">Все необходимые инструменты для эффективного изучения математики</p>
+            
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Визуализация Функций</h3>
+                    <p>Интерактивные графики функций с возможностью изменения параметров в реальном времени.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Математический Калькулятор</h3>
+                    <p>Мощный калькулятор для решения уравнений, построения графиков и выполнения сложных вычислений.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Образовательные Материалы</h3>
+                    <p>Структурированные уроки по алгебре, геометрии, физике и программированию.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Калькулятор -->
+    <section class="section calculator-section" id="calculator">
+        <div class="container">
+            <h2 class="section-title">Математический Калькулятор</h2>
+            <p class="section-subtitle">Решайте уравнения, строьте графики и выполняйте сложные вычисления</p>
+            
+            <div class="calculator-container">
+                <div class="calculator-header">
+                    <h3>Построение Графиков</h3>
+                    <p>Введите функцию и настройте параметры для визуализации</p>
+                </div>
+                
+                <form id="calculatorForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="functionInput">Функция:</label>
+                            <input type="text" id="functionInput" placeholder="sin(x)" value="sin(x)">
+                        </div>
+                        <div class="form-group">
+                            <label for="xRange">Диапазон X:</label>
+                            <input type="text" id="xRange" placeholder="-10, 10" value="-10, 10">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="yRange">Диапазон Y:</label>
+                            <input type="text" id="yRange" placeholder="-5, 5" value="-5, 5">
+                        </div>
+                        <div class="form-group">
+                            <label for="colorSelect">Цвет графика:</label>
+                            <select id="colorSelect">
+                                <option value="#1a1a1a">Черный</option>
+                                <option value="#dc2626">Красный</option>
+                                <option value="#2563eb">Синий</option>
+                                <option value="#059669">Зеленый</option>
+                                <option value="#7c3aed">Фиолетовый</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Построить График</button>
+                    </div>
+                </form>
+                
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <h4>Результаты</h4>
+                    <div id="resultsContent">
+                        <!-- Результаты будут добавлены динамически -->
+                    </div>
+                </div>
+                
+                <div class="graph-container" id="graphContainer">
+                    <canvas id="graphCanvas" width="800" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О проекте -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">О Проекте</h2>
+            <p class="section-subtitle">Современная платформа для изучения математики</p>
+            
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>Миссия</h3>
+                    <p>Сделать изучение математики доступным, интерактивным и увлекательным для студентов всех уровней.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Технологии</h3>
+                    <p>Используем современные веб-технологии для создания интерактивных образовательных материалов.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Контакты</h2>
+            <div class="grid grid-2">
+                <div>
+                    <h3>Поддержка</h3>
+                    <p><strong>Email:</strong> support@fathersmath.com</p>
+                    <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
+                    <p><strong>Часы работы:</strong> Пн-Пт: 9:00 - 18:00</p>
+                </div>
+                <div>
+                    <h3>Разработка</h3>
+                    <p><strong>GitHub:</strong> github.com/fathersmath</p>
+                    <p><strong>Документация:</strong> docs.fathersmath.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Father's MATH</h3>
+                    <p>Современная платформа для изучения математики с интерактивными инструментами и образовательными материалами.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Возможности</h3>
+                    <p><a href="#calculator">Калькулятор</a></p>
+                    <p><a href="education.html">Образование</a></p>
+                    <p><a href="#about">О проекте</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Поддержка</h3>
+                    <p><a href="#contact">Контакты</a></p>
+                    <p><a href="#">Документация</a></p>
+                    <p><a href="#">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Father's MATH. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
     <script>
-        // Создаем частицы для эффекта взрыва
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 40;
-            const goldParticleCount = 15;
+        // Инициализация калькулятора
+        document.getElementById('calculatorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Обычные частицы
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Случайное направление движения
-                const angle = (Math.PI * 2 * i) / particleCount;
-                const distance = 120 + Math.random() * 300;
-                const x = Math.cos(angle) * distance;
-                const y = Math.sin(angle) * distance;
-                
-                particle.style.setProperty('--x', x + 'px');
-                particle.style.setProperty('--y', y + 'px');
-                particle.style.left = '50%';
-                particle.style.top = '50%';
-                
-                // Случайная задержка
-                particle.style.animationDelay = (3.6 + Math.random() * 0.8) + 's';
-                
-                particlesContainer.appendChild(particle);
-            }
+            const functionInput = document.getElementById('functionInput').value;
+            const xRange = document.getElementById('xRange').value;
+            const yRange = document.getElementById('yRange').value;
+            const color = document.getElementById('colorSelect').value;
             
-            // Золотые частицы
-            for (let i = 0; i < goldParticleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle-gold';
-                
-                // Случайное направление движения
-                const angle = Math.random() * Math.PI * 2;
-                const distance = 150 + Math.random() * 400;
-                const x = Math.cos(angle) * distance;
-                const y = Math.sin(angle) * distance;
-                
-                particle.style.setProperty('--x', x + 'px');
-                particle.style.setProperty('--y', y + 'px');
-                particle.style.left = '50%';
-                particle.style.top = '50%';
-                
-                // Случайная задержка
-                particle.style.animationDelay = (3.7 + Math.random() * 0.6) + 's';
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Инициализируем частицы
-        createParticles();
-
-        // Добавляем кнопку для перехода к основному приложению
-        setTimeout(() => {
-            const continueButton = document.createElement('button');
-            continueButton.textContent = 'Перейти к приложению';
-            continueButton.style.cssText = `
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: linear-gradient(45deg, #007bff, #00d4ff);
-                color: white;
-                border: none;
-                padding: 15px 30px;
-                font-size: 1.2rem;
-                border-radius: 10px;
-                cursor: pointer;
-                z-index: 30;
-                box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-                transition: all 0.3s ease;
+            // Показать результаты
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            resultsContent.innerHTML = `
+                <div class="result-item">
+                    <span class="result-label">Функция:</span>
+                    <span class="result-value">${functionInput}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Диапазон X:</span>
+                    <span class="result-value">${xRange}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Диапазон Y:</span>
+                    <span class="result-value">${yRange}</span>
+                </div>
             `;
             
-            continueButton.addEventListener('mouseenter', () => {
-                continueButton.style.transform = 'translate(-50%, -50%) scale(1.1)';
-                continueButton.style.boxShadow = '0 6px 20px rgba(0, 123, 255, 0.5)';
-            });
+            resultsSection.style.display = 'block';
             
-            continueButton.addEventListener('mouseleave', () => {
-                continueButton.style.transform = 'translate(-50%, -50%) scale(1)';
-                continueButton.style.boxShadow = '0 4px 15px rgba(0, 123, 255, 0.3)';
-            });
-            
-            continueButton.addEventListener('click', () => {
-                window.location.href = 'education.html';
-            });
-            
-            document.body.appendChild(continueButton);
-        }, 6000); // 6 секунд - время анимации + небольшая задержка
+            // Здесь можно добавить логику построения графика
+            console.log('Построение графика:', { functionInput, xRange, yRange, color });
+        });
     </script>
 </body>
 </html>

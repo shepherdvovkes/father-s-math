@@ -7,8 +7,7 @@ const http = require('http');
 // Загружаем переменные окружения
 require('dotenv').config({ path: './.env' });
 
-// Импортируем fetch для Node.js
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+// Node.js 18+ имеет встроенную поддержку fetch
 
 // SSL сертификаты
 const options = {
@@ -73,8 +72,11 @@ async function handleAIChatRequest(req, res) {
                 
                 // Проверяем наличие API ключа
                 const apiKey = process.env.OPENAI_API_KEY;
+                console.log('API key present:', !!apiKey);
+                console.log('API key starts with:', apiKey ? apiKey.substring(0, 10) + '...' : 'none');
+                
                 if (!apiKey || apiKey === 'your_openai_api_key_here') {
-                    res.write('Ошибка: API ключ OpenAI не настроен. Пожалуйста, добавьте ваш API ключ в файл config.env\n');
+                    res.write('Ошибка: API ключ OpenAI не настроен. Пожалуйста, добавьте ваш API ключ в файл .env\n');
                     res.end();
                     return;
                 }
@@ -94,6 +96,7 @@ async function handleAIChatRequest(req, res) {
                 const userPrompt = `Вопрос ученика: ${message}`;
 
                 // Отправляем запрос к OpenAI API
+                console.log('Sending request to OpenAI API...');
                 const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
                     method: 'POST',
                     headers: {
@@ -111,9 +114,19 @@ async function handleAIChatRequest(req, res) {
                         temperature: 0.7
                     })
                 });
+                
+                console.log('OpenAI response status:', openaiResponse.status);
+                console.log('OpenAI response body type:', typeof openaiResponse.body);
+                console.log('OpenAI response body:', openaiResponse.body);
+                console.log('getReader available:', typeof openaiResponse.body?.getReader);
 
                 if (!openaiResponse.ok) {
                     throw new Error(`OpenAI API error: ${openaiResponse.status}`);
+                }
+
+                // Проверяем, доступен ли getReader
+                if (!openaiResponse.body || typeof openaiResponse.body.getReader !== 'function') {
+                    throw new Error('Stream reading not supported in this environment');
                 }
 
                 const reader = openaiResponse.body.getReader();
