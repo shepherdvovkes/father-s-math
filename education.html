@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="education-styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 </head>
@@ -59,22 +60,22 @@
                         <p>Выберите предмет из списка слева, чтобы начать изучение</p>
                         <div class="subjects-overview">
                             <div class="subject-card">
-                                <div class="subject-icon">📊</div>
+                                <div class="subject-icon"><i class="fas fa-chart-line"></i></div>
                                 <h3>Алгебра</h3>
                                 <p>Функции, уравнения, тригонометрия</p>
                             </div>
                             <div class="subject-card">
-                                <div class="subject-icon">📐</div>
+                                <div class="subject-icon"><i class="fas fa-draw-polygon"></i></div>
                                 <h3>Геометрия</h3>
                                 <p>Векторы, координатная геометрия</p>
                             </div>
                             <div class="subject-card">
-                                <div class="subject-icon">⚡</div>
+                                <div class="subject-icon"><i class="fas fa-bolt"></i></div>
                                 <h3>Физика</h3>
                                 <p>Механика, электричество</p>
                             </div>
                             <div class="subject-card">
-                                <div class="subject-icon">💻</div>
+                                <div class="subject-icon"><i class="fas fa-code"></i></div>
                                 <h3>Программирование</h3>
                                 <p>Алгоритмы, структуры данных</p>
                             </div>
@@ -91,8 +92,8 @@
                             <span class="lesson-difficulty" id="lessonDifficulty">Средний</span>
                         </div>
                         <div class="lesson-actions">
-                            <button class="action-btn" id="editLessonBtn">✏️ Редактировать</button>
-                            <button class="action-btn" id="addLessonBtn">➕ Добавить урок</button>
+                            <button class="action-btn" id="editLessonBtn"><i class="fas fa-edit"></i> Редактировать</button>
+                            <button class="action-btn" id="addLessonBtn"><i class="fas fa-plus"></i> Добавить урок</button>
                         </div>
                     </div>
                     
@@ -108,7 +109,7 @@
                         </div>
                         <div class="theory-upload">
                             <input type="file" id="theoryImageUpload" accept="image/*" multiple>
-                            <label for="theoryImageUpload" class="upload-btn">📷 Добавить изображения теории</label>
+                            <label for="theoryImageUpload" class="upload-btn"><i class="fas fa-camera"></i> Добавить изображения теории</label>
                         </div>
                     </div>
 
@@ -124,7 +125,7 @@
                                 <label for="demoUrl">URL демо-версии:</label>
                                 <input type="url" id="demoUrl" placeholder="https://example.com/demo">
                             </div>
-                            <button class="save-links-btn" id="saveLinksBtn">💾 Сохранить ссылки</button>
+                            <button class="save-links-btn" id="saveLinksBtn"><i class="fas fa-save"></i> Сохранить ссылки</button>
                         </div>
                         <div class="program-embed" id="programEmbed">
                             <!-- Встроенная программа -->

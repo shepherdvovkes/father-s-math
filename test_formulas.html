@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тест математических формул</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
@@ -97,7 +98,7 @@
                         formulaDisplay.innerHTML = `<div class="formula-placeholder">Ошибка KaTeX: ${displayFormula}</div>`;
                     }
                 } else {
-                    console.warn(`  ⚠️ KaTeX not available, using fallback`);
+                    console.warn(`  <i class="fas fa-exclamation-triangle"></i> KaTeX not available, using fallback`);
                     formulaDisplay.innerHTML = `<div class="formula-placeholder">KaTeX недоступен: ${displayFormula}</div>`;
                 }
                 

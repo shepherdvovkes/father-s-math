@@ -8,7 +8,7 @@ class EducationDatabase {
             algebra: {
                 name: "Алгебра",
                 color: "#007bff",
-                icon: "📊",
+                icon: '<i class="fas fa-chart-line"></i>',
                 topics: {
                     functions: {
                         name: "Функции и их графики",

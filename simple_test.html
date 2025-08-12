@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Простой тест KaTeX</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <style>
         body {
@@ -87,10 +88,10 @@
                     });
                     
                     testDiv.classList.add('success');
-                    console.log(`✅ Success: ${test.name}`);
+                    console.log(`<i class="fas fa-check"></i> Success: ${test.name}`);
                     
                 } catch (error) {
-                    console.error(`❌ Error in ${test.name}:`, error);
+                    console.error(`<i class="fas fa-times"></i> Error in ${test.name}:`, error);
                     resultDiv.innerHTML = `<div style="color: red;">Ошибка: ${error.message}</div>`;
                     resultDiv.innerHTML += `<div>Fallback: ${test.latex}</div>`;
                     testDiv.classList.add('error');

@@ -290,10 +290,10 @@ class EducationPlatform {
      */
     getLessonIcon(type) {
         const icons = {
-            interactive: '🎮',
-            theory: '📖'
+            interactive: '<i class="fas fa-gamepad"></i>',
+            theory: '<i class="fas fa-book"></i>'
         };
-        return icons[type] || '📝';
+        return icons[type] || '<i class="fas fa-edit"></i>';
     }
 
     /**
