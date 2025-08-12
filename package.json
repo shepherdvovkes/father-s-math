@@ -1,0 +1,38 @@
+{
+  "name": "fathers-math",
+  "version": "1.0.0",
+  "description": "Father's MATH - Математическое приложение с анимированной заставкой",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "pm2:start": "pm2 start ecosystem.config.js --env production",
+    "pm2:stop": "pm2 stop fathers-math",
+    "pm2:restart": "pm2 restart fathers-math",
+    "pm2:delete": "pm2 delete fathers-math",
+    "pm2:logs": "pm2 logs fathers-math",
+    "pm2:monit": "pm2 monit",
+    "pm2:status": "pm2 status",
+    "ssl:generate": "openssl req -x509 -newkey rsa:4096 -keyout ssl/key.pem -out ssl/cert.pem -days 365 -nodes -subj \"/C=RU/ST=Moscow/L=Moscow/O=Father's MATH/OU=Development/CN=localhost\"",
+    "setup": "npm run ssl:generate && mkdir -p logs"
+  },
+  "keywords": [
+    "math",
+    "mathematics",
+    "graphing",
+    "functions",
+    "animation",
+    "splash-screen"
+  ],
+  "author": "Father's MATH Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "local"
+  }
+}

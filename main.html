@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Lab - Графический калькулятор функций</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Graph Lab - Графический калькулятор функций</h1>
+            <p>30+ функций: декартовы, параметрические, полярные и полигональные</p>
+        </header>
+        
+        <main>
+            <div class="control-panel">
+                <div class="section">
+                    <h3>Выбор функции</h3>
+                    <div class="function-navigation">
+                        <button id="prevFunction" class="nav-btn">◀</button>
+                        <select id="functionSelect" class="select-control">
+                            <option value="">Выберите функцию...</option>
+                        </select>
+                        <button id="nextFunction" class="nav-btn">▶</button>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Выбор шаблона</h3>
+                    <div class="template-navigation">
+                        <button id="prevTemplate" class="nav-btn">◀</button>
+                        <select id="templateSelect" class="select-control">
+                            <option value="">Выберите шаблон...</option>
+                        </select>
+                        <button id="nextTemplate" class="nav-btn">▶</button>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Параметры функции</h3>
+                    <div id="parametersContainer" class="parameters-container">
+                        <p class="placeholder">Выберите функцию для отображения параметров</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Диапазон X</h3>
+                    <div class="range-controls">
+                        <div class="range-input">
+                            <label for="xMin">от:</label>
+                            <input type="number" id="xMin" value="-10" step="0.1" class="number-input">
+                        </div>
+                        <div class="range-input">
+                            <label for="xMax">до:</label>
+                            <input type="number" id="xMax" value="10" step="0.1" class="number-input">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <button id="plotButton" class="plot-button">Построить график</button>
+                    <button id="clearButton" class="clear-button">Очистить</button>
+                </div>
+                
+                <div class="section">
+                    <h3>Информация</h3>
+                    <div id="infoContainer" class="info-container">
+                        <div id="formulaDisplay" class="formula-display">
+                            <div class="formula-placeholder">Выберите функцию для отображения формулы</div>
+                        </div>
+                        <div id="descriptionDisplay" class="description-display">
+                            Выберите функцию для отображения описания
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Управление</h3>
+                    <div class="controls-info">
+                        <div class="keyboard-shortcuts">
+                            <h4>Клавиатурные сокращения:</h4>
+                            <div class="shortcut-item">
+                                <span class="key">←</span> <span class="desc">Предыдущая функция</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="key">→</span> <span class="desc">Следующая функция</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="key">↑</span> <span class="desc">Предыдущий шаблон</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="key">↓</span> <span class="desc">Следующий шаблон</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="key">Пробел</span> <span class="desc">Построить график</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="graph-container">
+                <canvas id="graphCanvas"></canvas>
+                <div class="graph-controls">
+                    <button id="zoomIn" class="control-btn">+</button>
+                    <button id="zoomOut" class="control-btn">-</button>
+                    <button id="resetZoom" class="control-btn">Сброс</button>
+                    <button id="saveGraph" class="control-btn">Сохранить</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/model/templateNames.js"></script>
+    <script src="js/model/functionLibrary.js"></script>
+    <script src="js/model/calculator.js"></script>
+    <script src="js/model/templates.js"></script>
+    <script src="js/model/mathFormulas.js"></script>
+    <script src="js/view/graphCanvas.js"></script>
+    <script src="js/view/uiPanel.js"></script>
+    <script src="js/controller/mainController.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/app.js" defer></script>
+    <script src="demo.js" defer></script>
+</body>
+</html>

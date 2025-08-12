@@ -1,0 +1,541 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+main {
+    display: flex;
+    gap: 30px;
+    flex: 1;
+    min-height: 600px;
+}
+
+.control-panel {
+    width: 400px;
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    height: fit-content;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.section h3 {
+    color: #4a5568;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.select-control {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    transition: border-color 0.3s ease;
+}
+
+.select-control:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Navigation buttons */
+.function-navigation,
+.template-navigation {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 8px 12px;
+    border: 2px solid #e2e8f0;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: #4a5568;
+    transition: all 0.3s ease;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover {
+    background: #f7fafc;
+    border-color: #667eea;
+    color: #667eea;
+    transform: scale(1.05);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.function-navigation .select-control,
+.template-navigation .select-control {
+    flex: 1;
+}
+
+/* Keyboard shortcuts styles */
+.controls-info {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.keyboard-shortcuts h4 {
+    margin: 0 0 10px 0;
+    color: #4a5568;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.shortcut-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.shortcut-item .key {
+    background: #e2e8f0;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 8px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #2d3748;
+    min-width: 20px;
+    text-align: center;
+}
+
+.shortcut-item .desc {
+    color: #4a5568;
+}
+
+.parameters-container {
+    min-height: 60px;
+}
+
+.parameter-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.parameter-row label {
+    min-width: 60px;
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.number-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.number-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.range-controls {
+    display: flex;
+    gap: 15px;
+}
+
+.range-input {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.range-input label {
+    font-size: 12px;
+    color: #718096;
+    font-weight: 500;
+}
+
+.plot-button, .clear-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.plot-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.plot-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.clear-button {
+    background: #f7fafc;
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+}
+
+.clear-button:hover {
+    background: #edf2f7;
+    border-color: #cbd5e0;
+}
+
+.info-container {
+    background: #f7fafc;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.formula-display {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #2d3748;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+}
+
+.description-display {
+    font-size: 13px;
+    color: #718096;
+    line-height: 1.5;
+}
+
+.placeholder {
+    color: #a0aec0;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 8px;
+    border: 2px dashed #d1d5db;
+}
+
+.graph-container {
+    flex: 1;
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#graphCanvas {
+    flex: 1;
+    height: 500px;
+    min-height: 500px;
+    max-height: 600px;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.graph-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.control-btn {
+    padding: 8px 16px;
+    border: 2px solid #e2e8f0;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: #f7fafc;
+    border-color: #667eea;
+    color: #667eea;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    main {
+        flex-direction: column;
+    }
+    
+    .control-panel {
+        width: 100%;
+        max-height: none;
+    }
+    
+    .graph-container {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .control-panel {
+        padding: 20px;
+    }
+    
+    .range-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .graph-controls {
+        flex-wrap: wrap;
+    }
+}
+
+/* Scrollbar Styling */
+.control-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.control-panel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.control-panel::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.control-panel::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Error notification styles */
+.error-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ef4444;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    max-width: 300px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animation for loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error states */
+.error {
+    border-color: #e53e3e !important;
+    background-color: #fed7d7 !important;
+}
+
+.error-message {
+    color: #e53e3e;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Success states */
+.success {
+    border-color: #38a169 !important;
+    background-color: #f0fff4 !important;
+}
+
+/* KaTeX Math Formula Styles */
+.formula-display {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #2d3748;
+    margin-bottom: 10px;
+    padding: 15px;
+    background: white;
+    border-radius: 6px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.formula-placeholder {
+    color: #a0aec0;
+    font-style: italic;
+    text-align: center;
+}
+
+.katex {
+    font-size: 1.2em !important;
+    color: #2d3748 !important;
+    line-height: 1.4 !important;
+}
+
+.katex-display {
+    margin: 0 !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+}
+
+.katex .mord {
+    color: #2d3748 !important;
+}
+
+.katex .mbin {
+    color: #667eea !important;
+}
+
+.katex .mrel {
+    color: #667eea !important;
+}
+
+.katex .mpunct {
+    color: #667eea !important;
+}
+
+.katex .mopen, .katex .mclose {
+    color: #667eea !important;
+}
+
+.katex .mop {
+    color: #667eea !important;
+}
+
+.katex .mord.text {
+    color: #2d3748 !important;
+}
+
+/* Math formula container */
+.math-formula {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    margin: 5px 0;
+    min-height: 50px;
+    width: 100%;
+}
+
+.math-formula .katex {
+    font-size: 1.3em !important;
+    line-height: 1.4;
+}
+
+.math-formula .katex-display {
+    margin: 0 !important;
+    text-align: center !important;
+}

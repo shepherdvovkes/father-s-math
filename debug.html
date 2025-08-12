@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отладка Graph Lab</title>
+</head>
+<body>
+    <h1>Отладка Graph Lab</h1>
+    <div id="output"></div>
+    
+    <script>
+        function log(message) {
+            console.log(message);
+            document.getElementById('output').innerHTML += '<p>' + message + '</p>';
+        }
+        
+        log('Начинаем загрузку...');
+    </script>
+    
+    <script src="js/model/templateNames.js"></script>
+    <script>
+        log('templateNames.js загружен');
+        if (typeof TemplateNames !== 'undefined') {
+            log('✓ TemplateNames доступен');
+        } else {
+            log('✗ TemplateNames НЕ доступен');
+        }
+    </script>
+    
+    <script src="js/model/functionLibrary.js"></script>
+    <script>
+        log('functionLibrary.js загружен');
+        if (typeof FunctionLibrary !== 'undefined') {
+            log('✓ FunctionLibrary доступен');
+        } else {
+            log('✗ FunctionLibrary НЕ доступен');
+        }
+    </script>
+    
+    <script src="js/model/calculator.js"></script>
+    <script>
+        log('calculator.js загружен');
+        if (typeof Calculator !== 'undefined') {
+            log('✓ Calculator доступен');
+        } else {
+            log('✗ Calculator НЕ доступен');
+        }
+    </script>
+    
+    <script src="js/model/mathFormulas.js"></script>
+    <script>
+        log('mathFormulas.js загружен');
+        if (typeof MathFormulas !== 'undefined') {
+            log('✓ MathFormulas доступен');
+        } else {
+            log('✗ MathFormulas НЕ доступен');
+        }
+    </script>
+    
+    <script src="js/view/graphCanvas.js"></script>
+    <script>
+        log('graphCanvas.js загружен');
+        if (typeof GraphCanvas !== 'undefined') {
+            log('✓ GraphCanvas доступен');
+        } else {
+            log('✗ GraphCanvas НЕ доступен');
+        }
+    </script>
+    
+    <script src="js/view/uiPanel.js"></script>
+    <script>
+        log('uiPanel.js загружен');
+        if (typeof UIPanel !== 'undefined') {
+            log('✓ UIPanel доступен');
+        } else {
+            log('✗ UIPanel НЕ доступен');
+        }
+    </script>
+    
+    <script src="js/controller/mainController.js"></script>
+    <script>
+        log('mainController.js загружен');
+        if (typeof MainController !== 'undefined') {
+            log('✓ MainController доступен');
+        } else {
+            log('✗ MainController НЕ доступен');
+        }
+    </script>
+    
+    <script src="js/app.js"></script>
+    <script>
+        log('app.js загружен');
+        if (typeof App !== 'undefined') {
+            log('✓ App доступен');
+        } else {
+            log('✗ App НЕ доступен');
+        }
+    </script>
+    
+    <script>
+        log('=== ТЕСТ ИНДИВИДУАЛЬНЫХ НАЗВАНИЙ ===');
+        
+        if (typeof FunctionLibrary !== 'undefined' && typeof TemplateNames !== 'undefined') {
+            try {
+                const fl = new FunctionLibrary();
+                const tn = new TemplateNames();
+                
+                log('Тестируем шаблоны для Linear...');
+                const templates = fl.getTemplates('Linear');
+                log('Найдено шаблонов: ' + templates.length);
+                
+                templates.slice(0, 3).forEach((template, index) => {
+                    log(`Шаблон ${index + 1}: ${template.name}`);
+                });
+                
+                log('✓ Индивидуальные названия работают!');
+            } catch (error) {
+                log('✗ Ошибка при тестировании: ' + error.message);
+            }
+        } else {
+            log('✗ Не удалось протестировать - классы недоступны');
+        }
+    </script>
+</body>
+</html>

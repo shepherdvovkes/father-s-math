@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Father's MATH - Образовательная платформа 10 класс</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="education-styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+</head>
+<body>
+    <div class="education-container">
+        <!-- Заголовок -->
+        <header class="education-header">
+            <div class="header-content">
+                <h1>Father's MATH</h1>
+                <p>Образовательная платформа для 10-го класса</p>
+                <div class="header-stats">
+                    <span class="stat-item">
+                        <span class="stat-number" id="totalLessons">0</span>
+                        <span class="stat-label">уроков</span>
+                    </span>
+                    <span class="stat-item">
+                        <span class="stat-number" id="totalSubjects">4</span>
+                        <span class="stat-label">предмета</span>
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Навигация по предметам -->
+        <nav class="subjects-nav">
+            <div class="subjects-grid" id="subjectsGrid">
+                <!-- Предметы будут добавлены динамически -->
+            </div>
+        </nav>
+
+        <!-- Основной контент -->
+        <main class="education-main">
+            <!-- Панель навигации по темам -->
+            <aside class="topics-sidebar" id="topicsSidebar">
+                <div class="sidebar-header">
+                    <h3 id="currentSubjectName">Выберите предмет</h3>
+                    <button class="back-btn" id="backToSubjects" style="display: none;">← Назад к предметам</button>
+                </div>
+                <div class="topics-tree" id="topicsTree">
+                    <!-- Дерево тем будет добавлено динамически -->
+                </div>
+            </aside>
+
+            <!-- Область контента -->
+            <section class="content-area">
+                <!-- Заглушка для выбора предмета -->
+                <div class="content-placeholder" id="contentPlaceholder">
+                    <div class="placeholder-content">
+                        <h2>Добро пожаловать в образовательную платформу!</h2>
+                        <p>Выберите предмет из списка слева, чтобы начать изучение</p>
+                        <div class="subjects-overview">
+                            <div class="subject-card">
+                                <div class="subject-icon">📊</div>
+                                <h3>Алгебра</h3>
+                                <p>Функции, уравнения, тригонометрия</p>
+                            </div>
+                            <div class="subject-card">
+                                <div class="subject-icon">📐</div>
+                                <h3>Геометрия</h3>
+                                <p>Векторы, координатная геометрия</p>
+                            </div>
+                            <div class="subject-card">
+                                <div class="subject-icon">⚡</div>
+                                <h3>Физика</h3>
+                                <p>Механика, электричество</p>
+                            </div>
+                            <div class="subject-card">
+                                <div class="subject-icon">💻</div>
+                                <h3>Программирование</h3>
+                                <p>Алгоритмы, структуры данных</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Контент урока -->
+                <div class="lesson-content" id="lessonContent" style="display: none;">
+                    <div class="lesson-header">
+                        <h2 id="lessonTitle">Название урока</h2>
+                        <div class="lesson-meta">
+                            <span class="lesson-type" id="lessonType">Интерактивный</span>
+                            <span class="lesson-difficulty" id="lessonDifficulty">Средний</span>
+                        </div>
+                        <div class="lesson-actions">
+                            <button class="action-btn" id="editLessonBtn">✏️ Редактировать</button>
+                            <button class="action-btn" id="addLessonBtn">➕ Добавить урок</button>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-description" id="lessonDescription">
+                        Описание урока
+                    </div>
+
+                    <!-- Теоретические материалы -->
+                    <div class="theory-section" id="theorySection" style="display: none;">
+                        <h3>Теоретические материалы</h3>
+                        <div class="theory-images" id="theoryImages">
+                            <!-- Изображения теории -->
+                        </div>
+                        <div class="theory-upload">
+                            <input type="file" id="theoryImageUpload" accept="image/*" multiple>
+                            <label for="theoryImageUpload" class="upload-btn">📷 Добавить изображения теории</label>
+                        </div>
+                    </div>
+
+                    <!-- Интерактивная программа -->
+                    <div class="interactive-section" id="interactiveSection" style="display: none;">
+                        <h3>Интерактивная программа</h3>
+                        <div class="program-links">
+                            <div class="link-group">
+                                <label for="githubUrl">GitHub репозиторий:</label>
+                                <input type="url" id="githubUrl" placeholder="https://github.com/username/repo">
+                            </div>
+                            <div class="link-group">
+                                <label for="demoUrl">URL демо-версии:</label>
+                                <input type="url" id="demoUrl" placeholder="https://example.com/demo">
+                            </div>
+                            <button class="save-links-btn" id="saveLinksBtn">💾 Сохранить ссылки</button>
+                        </div>
+                        <div class="program-embed" id="programEmbed">
+                            <!-- Встроенная программа -->
+                        </div>
+                    </div>
+
+                    <!-- Теги -->
+                    <div class="tags-section">
+                        <h3>Теги</h3>
+                        <div class="tags-container" id="tagsContainer">
+                            <!-- Теги будут добавлены динамически -->
+                        </div>
+                        <div class="tag-input">
+                            <input type="text" id="newTagInput" placeholder="Добавить тег...">
+                            <button id="addTagBtn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Модальное окно для добавления/редактирования урока -->
+        <div class="modal" id="lessonModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Добавить новый урок</h3>
+                    <button class="modal-close" id="modalClose">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="lessonForm">
+                        <div class="form-group">
+                            <label for="lessonTitleInput">Название урока:</label>
+                            <input type="text" id="lessonTitleInput" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lessonDescriptionInput">Описание:</label>
+                            <textarea id="lessonDescriptionInput" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="lessonTypeSelect">Тип урока:</label>
+                            <select id="lessonTypeSelect" required>
+                                <option value="interactive">Интерактивный</option>
+                                <option value="theory">Теоретический</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="lessonDifficultySelect">Сложность:</label>
+                            <select id="lessonDifficultySelect" required>
+                                <option value="easy">Легкий</option>
+                                <option value="medium">Средний</option>
+                                <option value="hard">Сложный</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="lessonTagsInput">Теги (через запятую):</label>
+                            <input type="text" id="lessonTagsInput" placeholder="алгебра, функции, графики">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary" id="modalCancel">Отмена</button>
+                    <button class="btn-primary" id="modalSave">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="js/model/educationDatabase.js"></script>
+    <script src="js/model/templateNames.js"></script>
+    <script src="js/model/functionLibrary.js"></script>
+    <script src="js/model/calculator.js"></script>
+    <script src="js/model/templates.js"></script>
+    <script src="js/model/mathFormulas.js"></script>
+    <script src="js/view/graphCanvas.js"></script>
+    <script src="js/view/uiPanel.js"></script>
+    <script src="js/controller/mainController.js"></script>
+    <script src="js/education.js"></script>
+</body>
+</html>

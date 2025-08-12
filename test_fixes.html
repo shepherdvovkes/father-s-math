@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест исправлений Graph Lab</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success {
+            color: #22c55e;
+            font-weight: bold;
+        }
+        .error {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        .info {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Тест исправлений Graph Lab</h1>
+    
+    <div class="test-section">
+        <h2>Проверка исправлений</h2>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+
+        // Проверяем, что все файлы загружаются
+        addResult('Проверка загрузки файлов...', 'info');
+        
+        // Проверяем основные компоненты
+        if (typeof FunctionLibrary !== 'undefined') {
+            addResult('✅ FunctionLibrary загружен успешно', 'success');
+        } else {
+            addResult('❌ FunctionLibrary не загружен', 'error');
+        }
+
+        if (typeof Calculator !== 'undefined') {
+            addResult('✅ Calculator загружен успешно', 'success');
+        } else {
+            addResult('❌ Calculator не загружен', 'error');
+        }
+
+        if (typeof MainController !== 'undefined') {
+            addResult('✅ MainController загружен успешно', 'success');
+        } else {
+            addResult('❌ MainController не загружен', 'error');
+        }
+
+        if (typeof GraphCanvas !== 'undefined') {
+            addResult('✅ GraphCanvas загружен успешно', 'success');
+        } else {
+            addResult('❌ GraphCanvas не загружен', 'error');
+        }
+
+        if (typeof UIPanel !== 'undefined') {
+            addResult('✅ UIPanel загружен успешно', 'success');
+        } else {
+            addResult('❌ UIPanel не загружен', 'error');
+        }
+
+        // Проверяем функциональность
+        try {
+            const functionLibrary = new FunctionLibrary();
+            const functions = functionLibrary.getFunctionNames();
+            addResult(`✅ Найдено ${functions.length} функций`, 'success');
+            
+            // Проверяем шаблоны
+            const templates = functionLibrary.getTemplates('Linear');
+            addResult(`✅ Шаблоны для Linear: ${templates.length} (с именами: ${templates[0]?.name ? 'да' : 'нет'})`, 'success');
+            
+        } catch (error) {
+            addResult(`❌ Ошибка при тестировании: ${error.message}`, 'error');
+        }
+
+        addResult('Тест завершен. Откройте index.html для полного тестирования.', 'info');
+    </script>
+</body>
+</html>
