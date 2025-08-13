@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест Education Platform</title>
+</head>
+<body>
+    <h1>Тест Education Platform</h1>
+    <div id="testOutput"></div>
+    
+    <script src="js/model/educationDatabase.js"></script>
+    <script>
+        console.log('Тест: Начинаем...');
+        
+        try {
+            console.log('Тест: Создаем базу данных...');
+            const db = new EducationDatabase();
+            console.log('Тест: База данных создана успешно');
+            
+            console.log('Тест: Получаем предметы...');
+            const subjects = db.getSubjects();
+            console.log('Тест: Предметы:', subjects);
+            
+            console.log('Тест: Получаем алгебру...');
+            const algebra = db.getSubject('algebra');
+            console.log('Тест: Алгебра:', algebra);
+            
+            console.log('Тест: Получаем темы алгебры...');
+            const topics = db.getTopics('algebra');
+            console.log('Тест: Темы алгебры:', topics);
+            
+            console.log('Тест: Получаем все уроки алгебры...');
+            const allLessons = db.getAllLessonsForSubject('algebra');
+            console.log('Тест: Все уроки алгебры:', allLessons);
+            
+            document.getElementById('testOutput').innerHTML = `
+                <h2>Результаты теста:</h2>
+                <p>Предметов: ${subjects.length}</p>
+                <p>Уроков в алгебре: ${allLessons.length}</p>
+                <p>Тем в алгебре: ${topics.length}</p>
+                <h3>Предметы:</h3>
+                <ul>
+                    ${subjects.map(s => `<li>${s.name}</li>`).join('')}
+                </ul>
+                <h3>Темы алгебры:</h3>
+                <ul>
+                    ${topics.map(t => `<li>${t.name}</li>`).join('')}
+                </ul>
+                <h3>Первые 5 уроков алгебры:</h3>
+                <ul>
+                    ${allLessons.slice(0, 5).map(l => `<li>${l.title} (неделя ${l.week})</li>`).join('')}
+                </ul>
+            `;
+            
+        } catch (error) {
+            console.error('Тест: Ошибка:', error);
+            document.getElementById('testOutput').innerHTML = `
+                <h2>Ошибка:</h2>
+                <p>${error.message}</p>
+                <pre>${error.stack}</pre>
+            `;
+        }
+    </script>
+</body>
+</html>

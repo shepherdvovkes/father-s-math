@@ -4,27 +4,58 @@
  */
 class EducationPlatform {
     constructor() {
+        console.log('EducationPlatform: Инициализация...');
+        
         this.database = new EducationDatabase();
+        console.log('EducationPlatform: База данных создана');
+        
         this.currentSubject = null;
         this.currentTopic = null;
         this.currentSubtopic = null;
         this.currentLesson = null;
         
         this.initializeElements();
+        console.log('EducationPlatform: Элементы инициализированы');
+        
         this.setupEventListeners();
+        console.log('EducationPlatform: События настроены');
+        
         this.loadSubjects();
+        console.log('EducationPlatform: Предметы загружены');
+        
         this.updateStatistics();
+        console.log('EducationPlatform: Статистика обновлена');
+        
+        // Показываем карточки предметов при загрузке
+        console.log('EducationPlatform: Показываем карточки предметов...');
+        this.showSubjects();
+        console.log('EducationPlatform: Карточки предметов отображены');
     }
 
     initializeElements() {
+        console.log('initializeElements: Начинаем инициализацию элементов...');
+        
         // Основные элементы
         this.subjectsGrid = document.getElementById('subjectsGrid');
+        console.log('subjectsGrid:', this.subjectsGrid);
+        
         this.topicsSidebar = document.getElementById('topicsSidebar');
+        console.log('topicsSidebar:', this.topicsSidebar);
+        
         this.topicsTree = document.getElementById('topicsTree');
+        console.log('topicsTree:', this.topicsTree);
+        
         this.contentPlaceholder = document.getElementById('contentPlaceholder');
+        console.log('contentPlaceholder:', this.contentPlaceholder);
+        
         this.lessonContent = document.getElementById('lessonContent');
+        console.log('lessonContent:', this.lessonContent);
+        
         this.currentSubjectName = document.getElementById('currentSubjectName');
+        console.log('currentSubjectName:', this.currentSubjectName);
+        
         this.backToSubjectsBtn = document.getElementById('backToSubjects');
+        console.log('backToSubjectsBtn:', this.backToSubjectsBtn);
         
         // Статистика
         this.totalLessonsElement = document.getElementById('totalLessons');
@@ -71,42 +102,86 @@ class EducationPlatform {
         // Кнопки действий
         this.editLessonBtn = document.getElementById('editLessonBtn');
         this.addLessonBtn = document.getElementById('addLessonBtn');
+        
+        // Проверяем отсутствующие элементы
+        const missingElements = [];
+        const elementNames = [
+            'subjectsGrid', 'topicsSidebar', 'topicsTree', 'contentPlaceholder', 
+            'lessonContent', 'currentSubjectName', 'backToSubjectsBtn',
+            'lessonModal', 'lessonForm', 'modalTitle', 'modalClose', 'modalCancel', 'modalSave',
+            'lessonTitleInput', 'lessonDescriptionInput', 'lessonTypeSelect', 'lessonDifficultySelect', 'lessonTagsInput',
+            'githubUrl', 'demoUrl', 'saveLinksBtn', 'programEmbed',
+            'newTagInput', 'addTagBtn', 'theoryImages', 'theoryImageUpload',
+            'editLessonBtn', 'addLessonBtn'
+        ];
+        
+        elementNames.forEach(name => {
+            if (!this[name]) {
+                missingElements.push(name);
+            }
+        });
+        
+        if (missingElements.length > 0) {
+            console.warn('Отсутствующие элементы:', missingElements);
+        }
     }
 
     setupEventListeners() {
         // Навигация
-        this.backToSubjectsBtn.addEventListener('click', () => this.showSubjects());
+        if (this.backToSubjectsBtn) {
+            this.backToSubjectsBtn.addEventListener('click', () => this.showSubjects());
+        }
         
         // Модальное окно
-        this.modalClose.addEventListener('click', () => this.closeModal());
-        this.modalCancel.addEventListener('click', () => this.closeModal());
-        this.modalSave.addEventListener('click', () => this.saveLesson());
+        if (this.modalClose) {
+            this.modalClose.addEventListener('click', () => this.closeModal());
+        }
+        if (this.modalCancel) {
+            this.modalCancel.addEventListener('click', () => this.closeModal());
+        }
+        if (this.modalSave) {
+            this.modalSave.addEventListener('click', () => this.saveLesson());
+        }
         
         // Действия с уроками
-        this.editLessonBtn.addEventListener('click', () => this.editCurrentLesson());
-        this.addLessonBtn.addEventListener('click', () => this.addNewLesson());
+        if (this.editLessonBtn) {
+            this.editLessonBtn.addEventListener('click', () => this.editCurrentLesson());
+        }
+        if (this.addLessonBtn) {
+            this.addLessonBtn.addEventListener('click', () => this.addNewLesson());
+        }
         
         // Ссылки на программы
-        this.saveLinksBtn.addEventListener('click', () => this.saveProgramLinks());
+        if (this.saveLinksBtn) {
+            this.saveLinksBtn.addEventListener('click', () => this.saveProgramLinks());
+        }
         
         // Теги
-        this.addTagBtn.addEventListener('click', () => this.addTag());
-        this.newTagInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                this.addTag();
-            }
-        });
+        if (this.addTagBtn) {
+            this.addTagBtn.addEventListener('click', () => this.addTag());
+        }
+        if (this.newTagInput) {
+            this.newTagInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.addTag();
+                }
+            });
+        }
         
         // Загрузка изображений
-        this.theoryImageUpload.addEventListener('change', (e) => this.handleImageUpload(e));
+        if (this.theoryImageUpload) {
+            this.theoryImageUpload.addEventListener('change', (e) => this.handleImageUpload(e));
+        }
         
         // Закрытие модального окна по клику вне его
-        this.lessonModal.addEventListener('click', (e) => {
-            if (e.target === this.lessonModal) {
-                this.closeModal();
-            }
-        });
+        if (this.lessonModal) {
+            this.lessonModal.addEventListener('click', (e) => {
+                if (e.target === this.lessonModal) {
+                    this.closeModal();
+                }
+            });
+        }
     }
 
     /**
@@ -128,10 +203,15 @@ class EducationPlatform {
     createSubjectCard(subject) {
         const card = document.createElement('div');
         card.className = 'subject-card';
+        card.setAttribute('data-subject-id', subject.id);
         card.innerHTML = `
             <div class="subject-icon">${subject.icon}</div>
             <h3>${subject.name}</h3>
             <p>${this.getSubjectDescription(subject.id)}</p>
+            <div class="subject-stats">
+                <span class="topic-count">${this.getTopicCount(subject.id)} тем</span>
+                <span class="lesson-count">${this.getLessonCount(subject.id)} уроков</span>
+            </div>
         `;
         
         card.addEventListener('click', () => this.selectSubject(subject.id));
@@ -143,25 +223,76 @@ class EducationPlatform {
      */
     getSubjectDescription(subjectId) {
         const descriptions = {
-            algebra: "Функции, уравнения, тригонометрия",
-            geometry: "Векторы, координатная геометрия",
+            algebra: "Функции, уравнения, прогрессии",
+            geometry: "Треугольники, окружность, площади, векторы",
             physics: "Механика, электричество",
-            programming: "Алгоритмы, структуры данных"
+            programming: "Основы программирования, управляющие конструкции"
         };
         return descriptions[subjectId] || "Описание недоступно";
+    }
+
+    /**
+     * Получение количества тем в предмете
+     */
+    getTopicCount(subjectId) {
+        return this.database.getTopics(subjectId).length;
+    }
+
+    /**
+     * Получение количества уроков в предмете
+     */
+    getLessonCount(subjectId) {
+        return this.database.getAllLessonsForSubject(subjectId).length;
+    }
+
+    /**
+     * Получение количества уроков в подтемах темы
+     */
+    getSubtopicLessonCount(subjectId, topicId) {
+        const subtopics = this.database.getSubtopics(subjectId, topicId);
+        let totalLessons = 0;
+        
+        subtopics.forEach(subtopic => {
+            const lessons = this.database.getLessons(subjectId, topicId, subtopic.id);
+            totalLessons += lessons.length;
+        });
+        
+        return totalLessons;
     }
 
     /**
      * Выбор предмета
      */
     selectSubject(subjectId) {
+        console.log('selectSubject: Выбираем предмет', subjectId);
+        
         this.currentSubject = subjectId;
         const subject = this.database.getSubject(subjectId);
+        console.log('selectSubject: Предмет получен', subject);
         
+        // Обновляем заголовок
         this.currentSubjectName.textContent = subject.name;
+        
+        // Показываем кнопку "Назад"
         this.backToSubjectsBtn.style.display = 'block';
+        
+        // Загружаем темы предмета
         this.loadTopics(subjectId);
+        
+        // Показываем боковую панель
         this.showTopicsSidebar();
+        
+        // Скрываем заглушку и показываем контент
+        this.contentPlaceholder.style.display = 'none';
+        this.lessonContent.style.display = 'none';
+        
+        // Обновляем активные состояния
+        this.updateSubjectSelection(subjectId);
+        
+        // Показываем информацию о предмете
+        this.displaySubjectInfo(subjectId);
+        
+        console.log('selectSubject: Предмет выбран успешно');
     }
 
     /**
@@ -186,10 +317,15 @@ class EducationPlatform {
         
         const topicHeader = document.createElement('div');
         topicHeader.className = 'topic-header';
+        topicHeader.setAttribute('data-topic-id', topic.id);
         topicHeader.innerHTML = `
-            <span class="topic-icon">📚</span>
-            <span class="topic-name">${topic.name}</span>
-            <span class="topic-toggle">▶</span>
+            <div class="topic-info">
+                <span class="topic-name">${topic.name}</span>
+            </div>
+            <div class="topic-meta">
+                <span class="topic-lesson-count">${this.getSubtopicLessonCount(subjectId, topic.id)} уроков</span>
+                <span class="topic-toggle"><i class="fas fa-chevron-right"></i></span>
+            </div>
         `;
         
         const subtopicsList = document.createElement('div');
@@ -229,15 +365,21 @@ class EducationPlatform {
         
         const subtopicHeader = document.createElement('div');
         subtopicHeader.className = 'subtopic-header';
+        subtopicHeader.setAttribute('data-subtopic-id', subtopic.id);
+        const lessons = this.database.getLessons(subjectId, topicId, subtopic.id);
         subtopicHeader.innerHTML = `
-            <span class="subtopic-name">${subtopic.name}</span>
-            <span class="topic-toggle">▶</span>
+            <div class="subtopic-info">
+                <span class="subtopic-name">${subtopic.name}</span>
+            </div>
+            <div class="subtopic-meta">
+                <span class="subtopic-lesson-count">${lessons.length} уроков</span>
+                <span class="topic-toggle"><i class="fas fa-chevron-right"></i></span>
+            </div>
         `;
         
         const lessonsList = document.createElement('div');
         lessonsList.className = 'lessons-list';
         
-        const lessons = this.database.getLessons(subjectId, topicId, subtopic.id);
         lessons.forEach(lesson => {
             const lessonElement = this.createLessonElement(lesson, subjectId, topicId, subtopic.id);
             lessonsList.appendChild(lessonElement);
@@ -271,10 +413,14 @@ class EducationPlatform {
         
         const lessonLink = document.createElement('div');
         lessonLink.className = 'lesson-link';
+        lessonLink.setAttribute('data-lesson-id', lesson.id);
         lessonLink.innerHTML = `
-            <span class="lesson-icon">${this.getLessonIcon(lesson.type)}</span>
-            <span class="lesson-title">${lesson.title}</span>
-            <span class="lesson-type-badge">${this.getLessonTypeText(lesson.type)}</span>
+            <div class="lesson-info">
+                <span class="lesson-title">${lesson.title}</span>
+            </div>
+            <div class="lesson-meta">
+                <span class="lesson-week">Неделя ${lesson.week}</span>
+            </div>
         `;
         
         lessonLink.addEventListener('click', () => {
@@ -301,7 +447,7 @@ class EducationPlatform {
      */
     getLessonTypeText(type) {
         const texts = {
-            interactive: 'Интерактивный',
+            interactive: 'Интеракт',
             theory: 'Теория'
         };
         return texts[type] || 'Неизвестно';
@@ -316,9 +462,9 @@ class EducationPlatform {
         this.currentTopic = topicId;
         this.currentSubtopic = subtopicId;
         
-        const lessonInfo = this.database.getLesson(lessonId);
-        if (lessonInfo) {
-            this.displayLesson(lessonInfo.lesson);
+        const lesson = this.database.getLesson(subjectId, topicId, subtopicId, lessonId);
+        if (lesson) {
+            this.displayLesson(lesson);
         }
     }
 
@@ -353,6 +499,33 @@ class EducationPlatform {
         
         // Загружаем теоретические изображения
         this.loadTheoryImages(lesson.theoryImages || []);
+        
+        // Обновляем активные состояния в навигации
+        this.updateActiveStates();
+    }
+
+    /**
+     * Отображение информации о предмете
+     */
+    displaySubjectInfo(subjectId) {
+        this.contentPlaceholder.style.display = 'none';
+        this.lessonContent.style.display = 'block';
+        
+        const subject = this.database.getSubject(subjectId);
+        const allLessons = this.database.getAllLessonsForSubject(subjectId);
+        
+        // Заполняем информацию о предмете
+        this.lessonTitleElement.textContent = subject.name;
+        this.lessonTypeElement.textContent = 'Предмет';
+        this.lessonDifficultyElement.textContent = `${allLessons.length} уроков`;
+        this.lessonDescriptionElement.textContent = this.getSubjectDescription(subjectId);
+        
+        // Скрываем секции уроков
+        this.theorySection.style.display = 'none';
+        this.interactiveSection.style.display = 'none';
+        
+        // Очищаем теги
+        this.loadTags([]);
         
         // Обновляем активные состояния в навигации
         this.updateActiveStates();
@@ -497,12 +670,38 @@ class EducationPlatform {
         this.currentSubtopic = null;
         this.currentLesson = null;
         
+        // Показываем карточки предметов
         this.contentPlaceholder.style.display = 'block';
         this.lessonContent.style.display = 'none';
+        
+        // Скрываем боковую панель и кнопку "Назад"
+        this.topicsSidebar.style.display = 'none';
         this.backToSubjectsBtn.style.display = 'none';
         this.currentSubjectName.textContent = 'Выберите предмет';
         
+        // Сбрасываем активные состояния
         this.updateActiveStates();
+        
+        // Убираем выделение со всех карточек предметов
+        document.querySelectorAll('.subject-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+    }
+
+    /**
+     * Обновление выбора предмета
+     */
+    updateSubjectSelection(subjectId) {
+        // Убираем выделение со всех карточек предметов
+        document.querySelectorAll('.subject-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        
+        // Выделяем выбранный предмет
+        const selectedCard = document.querySelector(`[data-subject-id="${subjectId}"]`);
+        if (selectedCard) {
+            selectedCard.classList.add('selected');
+        }
     }
 
     /**
@@ -518,6 +717,27 @@ class EducationPlatform {
             const lessonLink = document.querySelector(`[data-lesson-id="${this.currentLesson}"]`);
             if (lessonLink) {
                 lessonLink.classList.add('active');
+                
+                // Находим и активируем родительские элементы
+                const subtopicHeader = lessonLink.closest('.subtopic-item').querySelector('.subtopic-header');
+                const topicHeader = subtopicHeader.closest('.topic-item').querySelector('.topic-header');
+                
+                subtopicHeader.classList.add('active');
+                topicHeader.classList.add('active');
+                
+                // Раскрываем родительские списки
+                const subtopicsList = subtopicHeader.nextElementSibling;
+                const topicsList = topicHeader.nextElementSibling;
+                
+                if (subtopicsList && !subtopicsList.classList.contains('expanded')) {
+                    subtopicsList.classList.add('expanded');
+                    subtopicHeader.querySelector('.topic-toggle').classList.add('expanded');
+                }
+                
+                if (topicsList && !topicsList.classList.contains('expanded')) {
+                    topicsList.classList.add('expanded');
+                    topicHeader.querySelector('.topic-toggle').classList.add('expanded');
+                }
             }
         }
     }
@@ -526,11 +746,11 @@ class EducationPlatform {
      * Редактирование текущего урока
      */
     editCurrentLesson() {
-        if (!this.currentLesson) return;
+        if (!this.currentLesson || !this.currentSubject || !this.currentTopic || !this.currentSubtopic) return;
         
-        const lessonInfo = this.database.getLesson(this.currentLesson);
+        const lessonInfo = this.database.getLesson(this.currentSubject, this.currentTopic, this.currentSubtopic, this.currentLesson);
         if (lessonInfo) {
-            this.openLessonModal('edit', lessonInfo.lesson);
+            this.openLessonModal('edit', lessonInfo);
         }
     }
 
@@ -621,9 +841,8 @@ class EducationPlatform {
      * Обновление статистики
      */
     updateStatistics() {
-        const stats = this.database.getStatistics();
-        this.totalLessonsElement.textContent = stats.totalLessons;
-        this.totalSubjectsElement.textContent = stats.subjects;
+        this.totalLessonsElement.textContent = this.database.getTotalLessons();
+        this.totalSubjectsElement.textContent = this.database.getTotalSubjects();
     }
 
     /**

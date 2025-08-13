@@ -16,11 +16,26 @@
         }
 
         body {
-            background: #000;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
             font-family: 'Orbitron', 'Arial', sans-serif;
             overflow: hidden;
             width: 100vw;
             height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 123, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .container {
@@ -34,24 +49,73 @@
         }
 
         .logo {
-            width: 500px;
-            height: 500px;
+            width: 400px;
+            height: 400px;
             object-fit: contain;
-            filter: drop-shadow(0 0 30px rgba(0, 123, 255, 0.8));
-            animation: logoPulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(0, 123, 255, 0.9)) 
+                    drop-shadow(0 0 80px rgba(0, 212, 255, 0.6));
+            animation: logoFloat 3s ease-in-out infinite;
             z-index: 10;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: logoGlow 3s ease-in-out infinite;
+            z-index: -1;
         }
 
         .title {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 900;
             color: #fff;
-            margin-top: 50px;
+            margin-top: 40px;
             text-align: center;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            text-shadow: 0 0 30px rgba(0, 123, 255, 0.8);
-            animation: titleGlow 2s ease-in-out infinite;
+            background: linear-gradient(45deg, #007bff, #00d4ff, #007bff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGradient 3s ease-in-out infinite, titleFloat 3s ease-in-out infinite;
+            z-index: 20;
+            position: relative;
+        }
+
+        .title::after {
+            content: 'Father\'s MATH';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(8px);
+            opacity: 0.5;
+            animation: titleGlow 3s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: 400;
+            animation: subtitleFade 2s ease-out 1s both;
             z-index: 20;
         }
 
@@ -104,23 +168,67 @@
             animation: progressFill 3s ease-out forwards;
         }
 
-        @keyframes logoPulse {
+        @keyframes logoFloat {
             0%, 100% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 30px rgba(0, 123, 255, 0.8));
+                transform: translateY(0px);
+                filter: drop-shadow(0 0 40px rgba(0, 123, 255, 0.9)) 
+                        drop-shadow(0 0 80px rgba(0, 212, 255, 0.6));
             }
             50% {
-                transform: scale(1.1);
-                filter: drop-shadow(0 0 50px rgba(0, 123, 255, 1));
+                transform: translateY(-10px);
+                filter: drop-shadow(0 0 60px rgba(0, 123, 255, 1)) 
+                        drop-shadow(0 0 100px rgba(0, 212, 255, 0.8));
+            }
+        }
+
+        @keyframes logoGlow {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        @keyframes titleGradient {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes titleFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
             }
         }
 
         @keyframes titleGlow {
             0%, 100% {
-                text-shadow: 0 0 30px rgba(0, 123, 255, 0.8);
+                opacity: 0.5;
+                filter: blur(8px);
             }
             50% {
-                text-shadow: 0 0 50px rgba(0, 123, 255, 1);
+                opacity: 0.8;
+                filter: blur(12px);
+            }
+        }
+
+        @keyframes subtitleFade {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -147,10 +255,11 @@
 </head>
 <body>
     <div class="container">
-        <img src="logo/logo1blue.png" alt="Father's MATH Logo" class="logo">
+        <img src="logo/logo1blue_nobg.png" alt="Father's MATH Logo" class="logo">
         <div class="title">Father's MATH</div>
+        <div class="subtitle">Математическая Платформа</div>
         <button class="continue-btn" onclick="window.location.href='education.html'">
-            <i class="fas fa-rocket"></i> Продолжить
+            <i class="fas fa-rocket"></i> Начать Обучение
         </button>
         <div class="loading-text">Загрузка математического движка...</div>
         <div class="progress-bar">

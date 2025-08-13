@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест Education Platform</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+    </style>
+</head>
+<body>
+    <h1>Тест Education Platform</h1>
+    
+    <div id="testResults"></div>
+    
+    <div class="test-section">
+        <h3>Элементы DOM:</h3>
+        <div id="domTest"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>База данных:</h3>
+        <div id="dbTest"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Предметы:</h3>
+        <div id="subjectsTest"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Алгебра:</h3>
+        <div id="algebraTest"></div>
+    </div>
+    
+    <script src="js/model/educationDatabase.js"></script>
+    <script src="js/education.js"></script>
+    <script>
+        console.log('=== НАЧАЛО ТЕСТА ===');
+        
+        function addResult(section, message, type = 'info') {
+            const div = document.getElementById(section);
+            div.innerHTML += `<div class="${type}">${message}</div>`;
+        }
+        
+        function testDOM() {
+            console.log('Тестируем DOM элементы...');
+            
+            const elements = [
+                'subjectsGrid',
+                'topicsSidebar', 
+                'topicsTree',
+                'contentPlaceholder',
+                'lessonContent',
+                'currentSubjectName',
+                'backToSubjects'
+            ];
+            
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    addResult('domTest', `✓ ${id} найден`, 'success');
+                } else {
+                    addResult('domTest', `✗ ${id} НЕ найден`, 'error');
+                }
+            });
+        }
+        
+        function testDatabase() {
+            console.log('Тестируем базу данных...');
+            
+            try {
+                const db = new EducationDatabase();
+                addResult('dbTest', '✓ База данных создана успешно', 'success');
+                
+                const subjects = db.getSubjects();
+                addResult('dbTest', `✓ Получено ${subjects.length} предметов`, 'success');
+                
+                return db;
+            } catch (error) {
+                addResult('dbTest', `✗ Ошибка базы данных: ${error.message}`, 'error');
+                return null;
+            }
+        }
+        
+        function testSubjects(db) {
+            console.log('Тестируем предметы...');
+            
+            if (!db) return;
+            
+            const subjects = db.getSubjects();
+            subjects.forEach(subject => {
+                addResult('subjectsTest', `✓ ${subject.name} (${subject.id})`, 'success');
+            });
+        }
+        
+        function testAlgebra(db) {
+            console.log('Тестируем алгебру...');
+            
+            if (!db) return;
+            
+            const algebra = db.getSubject('algebra');
+            if (algebra) {
+                addResult('algebraTest', `✓ Алгебра найдена: ${algebra.name}`, 'success');
+                
+                const topics = db.getTopics('algebra');
+                addResult('algebraTest', `✓ Тем в алгебре: ${topics.length}`, 'success');
+                
+                const allLessons = db.getAllLessonsForSubject('algebra');
+                addResult('algebraTest', `✓ Уроков в алгебре: ${allLessons.length}`, 'success');
+                
+                topics.forEach(topic => {
+                    addResult('algebraTest', `  - ${topic.name}`, 'info');
+                });
+                
+                allLessons.slice(0, 3).forEach(lesson => {
+                    addResult('algebraTest', `  • ${lesson.title} (неделя ${lesson.week})`, 'info');
+                });
+            } else {
+                addResult('algebraTest', '✗ Алгебра не найдена', 'error');
+            }
+        }
+        
+        function testEducationPlatform() {
+            console.log('Тестируем EducationPlatform...');
+            
+            try {
+                // Проверяем, что класс доступен
+                if (typeof EducationPlatform !== 'undefined') {
+                    addResult('testResults', '✓ EducationPlatform доступен', 'success');
+                    
+                    // Создаем экземпляр
+                    const platform = new EducationPlatform();
+                    addResult('testResults', '✓ EducationPlatform создан', 'success');
+                    
+                    // Проверяем, что алгебра выбрана
+                    if (platform.currentSubject === 'algebra') {
+                        addResult('testResults', '✓ Алгебра выбрана автоматически', 'success');
+                    } else {
+                        addResult('testResults', `✗ Алгебра не выбрана. Текущий предмет: ${platform.currentSubject}`, 'error');
+                    }
+                    
+                } else {
+                    addResult('testResults', '✗ EducationPlatform недоступен', 'error');
+                }
+            } catch (error) {
+                addResult('testResults', `✗ Ошибка EducationPlatform: ${error.message}`, 'error');
+            }
+        }
+        
+        // Запускаем тесты
+        setTimeout(() => {
+            console.log('Запускаем тесты...');
+            
+            testDOM();
+            const db = testDatabase();
+            testSubjects(db);
+            testAlgebra(db);
+            testEducationPlatform();
+            
+            console.log('=== КОНЕЦ ТЕСТА ===');
+        }, 100);
+    </script>
+</body>
+</html>

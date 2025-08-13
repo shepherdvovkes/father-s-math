@@ -194,7 +194,7 @@ const server = https.createServer(options, (req, res) => {
     
     // Обработка корневого пути
     if (pathname === '/') {
-        pathname = '/index.html';
+        pathname = '/splash_screen.html';
     }
     
     // Получаем безопасный путь к файлу
@@ -250,9 +250,16 @@ const server = https.createServer(options, (req, res) => {
             
             // Устанавливаем заголовки
             const mimeType = getMimeType(filePath);
+            let cacheControl = 'public, max-age=3600'; // Кэширование на 1 час
+            
+            // Отключаем кэширование для splash screen
+            if (pathname === '/splash_screen.html') {
+                cacheControl = 'no-cache, no-store, must-revalidate';
+            }
+            
             res.writeHead(200, { 
                 'Content-Type': mimeType + (mimeType.startsWith('text/') ? '; charset=utf-8' : ''),
-                'Cache-Control': 'public, max-age=3600' // Кэширование на 1 час
+                'Cache-Control': cacheControl
             });
             
             res.end(data);
